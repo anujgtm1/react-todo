@@ -6,29 +6,18 @@ import { ListItem, ListItemSecondaryAction, ListItemText } from 'material-ui/Lis
 
 class TodoElement extends React.Component {
     constructor(props) {
-        super();
+        super(props);
         this.label = props.label;
         this.state = {
             label: props.label,
             status: props.status
         }
+        this.itemId = props.itemId;
+        console.log(this.itemId);
     }
 
     isChecked = () => {
-        return this.state.status == 'complete';
-    }
-
-    toggleCheck = () => {
-        var status = this.state.status;
-        if (status == 'complete') {
-            this.setState({status: 'incomplete'});
-        } else {
-            this.setState({status: 'complete'})
-        }
-    }
-
-    handleClick = (e) => {
-        this.toggleCheck();
+        return this.props.status === 'complete';
     }
 
     render() {
@@ -43,7 +32,7 @@ class TodoElement extends React.Component {
             <ListItem
                 dense
                 button
-                onClick={this.handleClick}
+                onClick={(e) => this.props.toggleCheck(this.itemId, e)}
             >
                 <Checkbox
                     checked={this.isChecked()}
@@ -52,7 +41,7 @@ class TodoElement extends React.Component {
                 />
                 { textItem }
                 <ListItemSecondaryAction>
-                    <IconButton aria-label="Remove">
+                    <IconButton aria-label="Remove" onClick={(e) => this.props.removeItem(this.itemId, e)}>
                         <RemoveCircleOutlineIcon />
                     </IconButton>
                 </ListItemSecondaryAction>
