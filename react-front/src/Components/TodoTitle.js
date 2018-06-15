@@ -4,6 +4,8 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import IconButton from 'material-ui/IconButton';
+import { addTodo } from "../store/actions";
+import { connect } from 'react-redux';
 
 class TodoTitle extends React.Component {
 
@@ -12,9 +14,9 @@ class TodoTitle extends React.Component {
             <AppBar position="static" color="default">
                 <Toolbar>
                     <Typography variant="title" color="inherit" style={{flex: 1}}>
-                        {this.props.title}
+                        {'Title'}
                     </Typography>
-                    <IconButton style={{flex: 1}} onClick={this.props.addEmptyItem}>
+                    <IconButton onClick={this.props.addTodo}>
                         <AddCircleOutlineIcon />
                     </IconButton>
                 </Toolbar>
@@ -23,4 +25,14 @@ class TodoTitle extends React.Component {
     }
 }
 
-export default TodoTitle;
+const mapStateToProps = state => ({
+    title: state.todos.title
+
+})
+
+const mapDispatchToProps = dispatch => ({
+    addTodo: () => dispatch(addTodo("Dummy Text"))
+
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoTitle);
